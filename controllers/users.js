@@ -13,7 +13,13 @@ const createUser = (req, res, next) => {
     .then((hash) => User.create({ name, about, avatar, email, password: hash }))
     .then((user) => {
       res.status(201);
-      res.send(user);
+      res.send({
+        name: user.name,
+        about: user.about,
+        avatar: user.avatar,
+        email: user.email,
+        _id: user._id,
+      });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -47,7 +53,7 @@ const loginUser = (req, res, next) => {
   User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, SECRET_KEY, { expiresIn: '7d' });
-      res
+      res.status(200)
         .cookie('jwt', token, {
           maxAge: 1000 * 60 * 60 * 24 * 7,
           httpOnly: true,
