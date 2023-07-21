@@ -42,7 +42,7 @@ const deleteCard = (req, res, next) => {
         throw new ForbiddenError("Нет прав на удаление карточки");
       }
       card.deleteOne().then(() => {
-        res.status(204).send(card);
+        res.status(200).send(card);
       });
     })
     .catch((err) => {
@@ -81,7 +81,7 @@ const likeCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === "CastError") {
-        next(new BadRequest("Передан несуществующий _id карточки"));
+        next(new NotFoundError("Передан несуществующий _id карточки"));
       } else {
         next(err);
       }
