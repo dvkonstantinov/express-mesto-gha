@@ -73,7 +73,7 @@ const likeCard = (req, res, next) => {
   currentCard
     .then((card) => {
       if (!card) {
-        throw new BadRequest(
+        throw new NotFoundError(
           'Переданы некорректные данные для постановки/снятии лайка.',
         );
       }
@@ -81,7 +81,7 @@ const likeCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new NotFoundError('Передан несуществующий _id карточки'));
+        next(new BadRequest('Передан несуществующий _id карточки'));
       } else {
         next(err);
       }
