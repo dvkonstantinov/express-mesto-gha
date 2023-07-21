@@ -7,10 +7,14 @@ const BadRequest = require('../errors/BadRequest');
 const { SECRET_KEY } = require('../utils/constants');
 
 const createUser = (req, res, next) => {
-  const { name, about, avatar, email, password } = req.body;
+  const {
+    name, about, avatar, email, password,
+  } = req.body;
   bcrypt
     .hash(password, 10)
-    .then((hash) => User.create({ name, about, avatar, email, password: hash }))
+    .then((hash) => User.create({
+      name, about, avatar, email, password: hash,
+    }))
     .then((user) => {
       res.status(201);
       res.send({
@@ -25,8 +29,8 @@ const createUser = (req, res, next) => {
       if (err.name === 'ValidationError') {
         next(
           new BadRequest(
-            'Переданы некорректные данные при создании пользователя'
-          )
+            'Переданы некорректные данные при создании пользователя',
+          ),
         );
       } else if (err.code === 11000) {
         next(new ConflictError('Пользователь уже существует'));
@@ -95,13 +99,13 @@ const updateProfile = (req, res, next) => {
     {
       new: true,
       runValidators: true,
-    }
+    },
   )
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(
-          new BadRequest('Переданы некорректные данные при обновлении профиля.')
+          new BadRequest('Переданы некорректные данные при обновлении профиля.'),
         );
       } else {
         next(err);
@@ -116,7 +120,7 @@ const updateAvatar = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(
-          new BadRequest('Переданы некорректные данные при обновлении профиля.')
+          new BadRequest('Переданы некорректные данные при обновлении профиля.'),
         );
       } else {
         next(err);

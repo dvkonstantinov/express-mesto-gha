@@ -14,7 +14,7 @@ const createCard = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(
-          new BadRequest('Переданы некорректные данные при создании карточки')
+          new BadRequest('Переданы некорректные данные при создании карточки'),
         );
       } else {
         next(err);
@@ -35,7 +35,7 @@ const deleteCard = (req, res, next) => {
     .then((card) => {
       if (!card) {
         throw new NotFoundError(
-          'Переданы некорректные данные для удаления карточки.'
+          'Переданы некорректные данные для удаления карточки.',
         );
       }
       if (req.user._id !== card.owner.valueOf()) {
@@ -60,21 +60,21 @@ const likeCard = (req, res, next) => {
     currentCard = Card.findByIdAndUpdate(
       req.params.id,
       { $addToSet: { likes: req.user._id } },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     );
   }
   if (req.method === 'DELETE') {
     currentCard = Card.findByIdAndUpdate(
       req.params.id,
       { $pull: { likes: req.user._id } },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     );
   }
   currentCard
     .then((card) => {
       if (!card) {
         throw new BadRequest(
-          'Переданы некорректные данные для постановки/снятии лайка.'
+          'Переданы некорректные данные для постановки/снятии лайка.',
         );
       }
       res.send(card);

@@ -18,7 +18,7 @@ router.post(
       link: Joi.string().required().pattern(URL_REGEX),
     }),
   }),
-  createCard
+  createCard,
 );
 router.delete(
   '/:id',
@@ -27,7 +27,7 @@ router.delete(
       id: Joi.string().required().hex().length(24),
     }),
   }),
-  deleteCard
+  deleteCard,
 );
 router.put(
   '/:id/likes',
@@ -36,7 +36,7 @@ router.put(
       id: Joi.string().required().hex().length(24),
     }),
   }),
-  likeCard
+  likeCard,
 );
 router.delete(
   '/:id/likes',
@@ -45,6 +45,6 @@ router.delete(
       id: Joi.string().required().hex().length(24),
     }),
   }),
-  likeCard
+  likeCard,
 );
 module.exports = router;

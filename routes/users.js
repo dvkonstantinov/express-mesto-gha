@@ -19,7 +19,7 @@ router.get(
       id: Joi.string().required().hex().length(24),
     }),
   }),
-  getById
+  getById,
 );
 router.patch(
   '/me',
@@ -29,7 +29,7 @@ router.patch(
       about: Joi.string().required().min(2).max(30),
     }),
   }),
-  updateProfile
+  updateProfile,
 );
 router.patch(
   '/me/avatar',
@@ -40,7 +40,7 @@ router.patch(
         .pattern(URL_REGEX),
     }),
   }),
-  updateAvatar
+  updateAvatar,
 );
 
 module.exports = router;
