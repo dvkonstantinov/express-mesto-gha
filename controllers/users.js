@@ -52,14 +52,14 @@ const login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      // const token = jwt.sign({ _id: user._id }, SECRET_KEY, { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, SECRET_KEY, { expiresIn: '7d' });
       res.status(200)
-        // .cookie('jwt', token, {
-        //   maxAge: 1000 * 60 * 60 * 24 * 7,
-        //   httpOnly: true,
-        //   sameSite: true,
-        // })
-        .send({ user });
+        .cookie('jwt', token, {
+          maxAge: 1000 * 60 * 60 * 24 * 7,
+          httpOnly: true,
+          sameSite: true,
+        })
+        .end();
     })
     .catch(next);
 };
