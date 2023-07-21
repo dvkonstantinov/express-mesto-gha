@@ -1,6 +1,6 @@
 const { celebrate, Joi } = require('celebrate');
 const router = require('express').Router();
-const { loginUser } = require('../controllers/users');
+const { login } = require('../controllers/users');
 
 router.post(
   '/',
@@ -10,7 +10,7 @@ router.post(
       password: Joi.string().required().min(8),
     }),
   }),
-  loginUser
+  login,
 );
 
 module.exports = router;

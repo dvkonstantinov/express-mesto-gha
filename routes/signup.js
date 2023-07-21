@@ -14,7 +14,7 @@ router.post(
       password: Joi.string().required().min(8),
     }),
   }),
-  createUser
+  createUser,
 );
 
 module.exports = router;

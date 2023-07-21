@@ -48,9 +48,9 @@ const getMe = (req, res, next) => {
     .catch(next);
 };
 
-const loginUser = (req, res, next) => {
+const login = (req, res, next) => {
   const { email, password } = req.body;
-  User.findUserByCredentials(email, password)
+  return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, SECRET_KEY, { expiresIn: '7d' });
       res.status(200)
@@ -130,6 +130,6 @@ module.exports = {
   getById,
   updateProfile,
   updateAvatar,
-  loginUser,
+  login,
   getMe,
 };
